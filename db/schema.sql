@@ -12,15 +12,15 @@ CREATE TABLE employee (
 );
 
 CREATE TABLE role (
-  id INT NOT NULL AUTO_INCREMENT,
+  role_id INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(30) NULL,
   salary DECIMAL(8,2) NULL,
-  dept_id INT NULL,
-  PRIMARY KEY (id)
+  dept_id INT NOT NULL,
+  PRIMARY KEY (role_id)
 );
 
 CREATE TABLE department (
-  id INT NOT NULL AUTO_INCREMENT,
+  dept_id INT NOT NULL AUTO_INCREMENT,
   dept_name VARCHAR(30) NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (dept_id)
 );

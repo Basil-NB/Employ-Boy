@@ -1,23 +1,22 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
-const Sequelize = require('sequelize');
+const cTable = require('console.table');
 
-const PORT = process.env.PORT || 3001;
-
-const sequelize = new Sequelize(
-    'employ_boydb',
-    'root',
-    process.env.SECRET_KEY,
-    {
-        host: 'localhost',
-        dialect: 'mysql',
-        port: 3306
-    }
-);
-
-module.exports = sequelize;
-
-menu();
+const connection = mysql.createConnection({
+    host: 'localhost',
+  
+    port: 3306,
+  
+    user: 'root',
+  
+    password: '',
+    database: 'employee_trackerdb',
+  });
+  
+  connection.connect((err) => {
+    if (err) throw err;
+    menu();
+  });
 
 const menu = () => {
     inquirer
@@ -38,9 +37,6 @@ const menu = () => {
         })
         .then((answer) => {
             switch (answer.action) {
-                case 'Update Employee Role':
-                    updateRole();
-                    break;
 
                 case 'View All Roles':
                     viewRoles();
@@ -66,6 +62,10 @@ const menu = () => {
                     addEmployee();
                     break;
 
+                case 'Update Employee Role':
+                    updateRole();
+                    break;
+
                 case 'Quit':
                     connection.end();
                     break;
@@ -76,3 +76,15 @@ const menu = () => {
             }
         })
 };
+
+const viewRoles = () => {
+    connection.query('SELECT * FROM roles', (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        menu();
+      });
+};
+
+const addRole = () => {
+    
+}
